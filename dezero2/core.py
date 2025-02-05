@@ -19,12 +19,14 @@ class Variable:
         self.creator = func
 
     def backward(self):
-        f = self.creator
-        if f is None:
-            return
-        x = f.input
-        x.grad = f.backward(self.grad)
-        x.backward()
+        funcs = [self.creator]
+        while funcs:
+            f = funcs.pop()
+            x, y = f.input, f.output
+            x.grad = f.backward(y.grad)
+            if x.creator == None:
+                continue
+            funcs.append(x.creator)
 
 # %% ../nbs/00_core.ipynb 6
 class Function:
