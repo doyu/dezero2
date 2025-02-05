@@ -35,11 +35,13 @@ class Variable:
 
 # %% ../nbs/00_core.ipynb 6
 class Function:
-    def __call__(self, inputs):
+    def __call__(self, *inputs):
         def as_array(y): return np.array(y) if np.isscalar(y) else y # for numpy spec
 
         xs = [input.data for input in inputs]
-        ys = self.forward(xs)
+        ys = self.forward(*xs)
+        if not isinstance(ys, tuple):
+            ys = (ys,)
         outputs = [Variable(as_array(y)) for y in ys]
 
         for output in outputs:
@@ -47,7 +49,7 @@ class Function:
 
         self.inputs = inputs
         self.outputs = outputs
-        return outputs
+        return outputs if len(outputs) > 1 else outputs[0]
 
     def forward(self, in_data):
         raise NotImplementedError()
@@ -57,13 +59,12 @@ class Function:
 
 # %% ../nbs/00_core.ipynb 7
 class Add(Function):
-    def forward(self, xs):
-        x0, x1 = xs
+    def forward(self, x0, x1):
         y = x0 + x1
-        return (y,)
+        return y
 
-def add(xs):
-    return Add()(xs)
+def add(x0, x1):
+    return Add()(x0, x1)
 
 # %% ../nbs/00_core.ipynb 9
 class Square(Function):
