@@ -12,29 +12,43 @@ import numpy as np
 class Variable:
     def __init__(self, data):
         self.data = data
+        self.grad = None
 
 # %% ../nbs/00_core.ipynb 6
 class Function:
     def __call__(self, input):
-        assert type(input) == Variable, print(f"Expected Variable but got {type(input)}")
         x = input.data
         y = self.forward(x)
-        y = np.array(y) if type(y)==np.int64 or type(y)==np.float64 else y
         output = Variable(y)
+        self.input = input
         return output
 
     def forward(self, in_data):
         raise NotImplementedError()
 
+    def backward(self, gy):
+        raise NotImplementedError()
+
 # %% ../nbs/00_core.ipynb 7
 class Square(Function):
     def forward(self, x):
-        return x ** 2
+        y = x ** 2
+        return y
+
+    def backward(self, gy):
+        x = self.input.data
+        gx = 2 * x * gy
+        return gx
 
 # %% ../nbs/00_core.ipynb 9
 class Exp(Function):
     def forward(self, x):
         return np.exp(x)
+
+    def backward(self, gy):
+        x = self.input.data
+        gx = np.exp(x) * gy
+        return gx
 
 # %% ../nbs/00_core.ipynb 12
 def numerical_diff(f, x, eps=1e-4):
