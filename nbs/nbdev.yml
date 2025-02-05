@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "dezero2"
+  site-url: "https://doyu.github.io/dezero2"
+  description: "dezero study"
+  repo-branch: main
+  repo-url: "https://github.com/doyu/dezero2"
