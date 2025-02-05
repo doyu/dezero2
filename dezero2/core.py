@@ -18,6 +18,14 @@ class Variable:
     def set_creator(self, func):
         self.creator = func
 
+    def backward(self):
+        f = self.creator
+        if f is None:
+            return
+        x = f.input
+        x.grad = f.backward(self.grad)
+        x.backward()
+
 # %% ../nbs/00_core.ipynb 6
 class Function:
     def __call__(self, input):

@@ -17,5 +17,6 @@ d = { 'settings': { 'branch': 'main',
                               'dezero2.core.Square.forward': ('core.html#square.forward', 'dezero2/core.py'),
                               'dezero2.core.Variable': ('core.html#variable', 'dezero2/core.py'),
                               'dezero2.core.Variable.__init__': ('core.html#variable.__init__', 'dezero2/core.py'),
+                              'dezero2.core.Variable.backward': ('core.html#variable.backward', 'dezero2/core.py'),
                               'dezero2.core.Variable.set_creator': ('core.html#variable.set_creator', 'dezero2/core.py'),
                               'dezero2.core.numerical_diff': ('core.html#numerical_diff', 'dezero2/core.py')}}}
