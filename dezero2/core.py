@@ -22,6 +22,10 @@ class Variable:
         self.creator = None
         self.generation = 0
 
+    @property
+    def shape(self):
+        return self.data.shape
+
     def set_creator(self, func):
         self.creator = func
         self.generation = func.generation + 1
