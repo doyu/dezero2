@@ -34,7 +34,7 @@ class Variable:
                 gxs = (gxs,)
 
             for x, gx in zip(f.inputs, gxs):
-                x.grad = gx
+                x.grad = gx if x.grad==None else x.grad+gx
                 if x.creator is not None:
                     funcs.append(x.creator)
 
