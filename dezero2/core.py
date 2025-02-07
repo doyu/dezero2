@@ -8,6 +8,7 @@ __all__ = ['Variable', 'Function', 'Add', 'add', 'Square', 'square', 'Exp', 'exp
 # %% ../nbs/00_core.ipynb 3
 import numpy as np
 import weakref
+import contextlib
 
 # %% ../nbs/00_core.ipynb 5
 class Variable:
