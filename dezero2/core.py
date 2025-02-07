@@ -9,7 +9,7 @@ __all__ = ['Variable', 'Function', 'Add', 'add', 'Square', 'square', 'Exp', 'exp
 import numpy as np
 import weakref
 
-# %% ../nbs/00_core.ipynb 4
+# %% ../nbs/00_core.ipynb 5
 class Variable:
     def __init__(self, data):
         if data is not None: # Why allowing "None" here?
@@ -60,7 +60,7 @@ class Variable:
     def cleargrad(self):
         self.grad = None
 
-# %% ../nbs/00_core.ipynb 6
+# %% ../nbs/00_core.ipynb 7
 class Function:
     def __call__(self, *inputs):
         def as_array(y): return np.array(y) if np.isscalar(y) else y # for numpy spec
@@ -71,12 +71,13 @@ class Function:
             ys = (ys,)
         outputs = [Variable(as_array(y)) for y in ys]
 
-        self.generation = max([o.generation for o in inputs])
-        for output in outputs:
-            output.set_creator(self)
+        if Config.enable_backprop:
+            self.generation = max([o.generation for o in inputs])
+            for output in outputs:
+                output.set_creator(self)
+            self.inputs = inputs
+            self.outputs = [weakref.ref(output) for output in outputs]
 
-        self.inputs = inputs
-        self.outputs = [weakref.ref(output) for output in outputs]
         return outputs if len(outputs) > 1 else outputs[0]
 
     def forward(self, in_data):
@@ -85,7 +86,7 @@ class Function:
     def backward(self, gy):
         raise NotImplementedError()
 
-# %% ../nbs/00_core.ipynb 7
+# %% ../nbs/00_core.ipynb 8
 class Add(Function):
     def forward(self, x0, x1):
         y = x0 + x1
@@ -97,7 +98,7 @@ class Add(Function):
 def add(x0, x1):
     return Add()(x0, x1)
 
-# %% ../nbs/00_core.ipynb 9
+# %% ../nbs/00_core.ipynb 10
 class Square(Function):
     def forward(self, x):
         y = x ** 2
@@ -111,7 +112,7 @@ class Square(Function):
 def square(x):
     return Square()(x)
 
-# %% ../nbs/00_core.ipynb 11
+# %% ../nbs/00_core.ipynb 12
 class Exp(Function):
     def forward(self, x):
         return np.exp(x)
@@ -124,7 +125,7 @@ class Exp(Function):
 def exp(x):
     return Exp()(x)
 
-# %% ../nbs/00_core.ipynb 14
+# %% ../nbs/00_core.ipynb 15
 def numerical_diff(f, x, eps=1e-4):
     x0 = Variable(np.array(x.data - eps))
     x1 = Variable(np.array(x.data + eps))
