@@ -38,6 +38,9 @@ class Variable:
                 if x.creator is not None:
                     funcs.append(x.creator)
 
+    def cleargrad(self):
+        self.grad = None
+
 # %% ../nbs/00_core.ipynb 6
 class Function:
     def __call__(self, *inputs):
