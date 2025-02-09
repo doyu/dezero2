@@ -87,7 +87,7 @@ class Variable:
     def cleargrad(self):
         self.grad = None
 
-# %% ../nbs/00_core.ipynb 7
+# %% ../nbs/00_core.ipynb 6
 class Function:
     def __call__(self, *inputs):
         def as_array(y): return np.array(y) if np.isscalar(y) else y # for numpy spec
@@ -115,7 +115,7 @@ class Function:
     def backward(self, gy):
         raise NotImplementedError()
 
-# %% ../nbs/00_core.ipynb 8
+# %% ../nbs/00_core.ipynb 7
 class Add(Function):
     def forward(self, x0, x1):
         y = x0 + x1
@@ -127,7 +127,7 @@ class Add(Function):
 def add(x0, x1):
     return Add()(x0, x1)
 
-# %% ../nbs/00_core.ipynb 10
+# %% ../nbs/00_core.ipynb 8
 class Mul(Function):
     def forward(self, x0, x1):
         y = x0 * x1
@@ -140,7 +140,7 @@ class Mul(Function):
 def mul(x0, x1):
     return Mul()(x0, x1)
 
-# %% ../nbs/00_core.ipynb 11
+# %% ../nbs/00_core.ipynb 9
 class Square(Function):
     def forward(self, x):
         y = x ** 2
@@ -154,7 +154,7 @@ class Square(Function):
 def square(x):
     return Square()(x)
 
-# %% ../nbs/00_core.ipynb 13
+# %% ../nbs/00_core.ipynb 10
 class Exp(Function):
     def forward(self, x):
         return np.exp(x)
@@ -167,7 +167,7 @@ class Exp(Function):
 def exp(x):
     return Exp()(x)
 
-# %% ../nbs/00_core.ipynb 16
+# %% ../nbs/00_core.ipynb 17
 def numerical_diff(f, x, eps=1e-4):
     x0 = Variable(np.array(x.data - eps))
     x1 = Variable(np.array(x.data + eps))
