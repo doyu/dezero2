@@ -91,7 +91,9 @@ class Variable:
 class Function:
     def __call__(self, *inputs):
         def as_array(y): return np.array(y) if np.isscalar(y) else y # for numpy spec
+        def as_variable(obj): return obj if isinstance(obj, Variable) else Variable(obj)
 
+        inputs = [as_variable(x) for x in inputs]
         xs = [input.data for input in inputs]
         ys = self.forward(*xs)
         if not isinstance(ys, tuple):
