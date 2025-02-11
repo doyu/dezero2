@@ -60,4 +60,9 @@ d = { 'settings': { 'branch': 'main',
                               'dezero2.core.rsub': ('core.html#rsub', 'dezero2/core.py'),
                               'dezero2.core.square': ('core.html#square', 'dezero2/core.py'),
                               'dezero2.core.sub': ('core.html#sub', 'dezero2/core.py'),
-                              'dezero2.core.using_config': ('core.html#using_config', 'dezero2/core.py')}}}
+                              'dezero2.core.using_config': ('core.html#using_config', 'dezero2/core.py')},
+            'dezero2.utils': { 'dezero2.utils.__plot_dot_graph': ('utils.html#__plot_dot_graph', 'dezero2/utils.py'),
+                               'dezero2.utils._dot_func': ('utils.html#_dot_func', 'dezero2/utils.py'),
+                               'dezero2.utils._dot_var': ('utils.html#_dot_var', 'dezero2/utils.py'),
+                               'dezero2.utils.get_dot_graph': ('utils.html#get_dot_graph', 'dezero2/utils.py'),
+                               'dezero2.utils.plot_dot_graph': ('utils.html#plot_dot_graph', 'dezero2/utils.py')}}}
